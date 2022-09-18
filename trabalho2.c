@@ -5,15 +5,6 @@
 #include <signal.h>
 #define EVER ;;
 
-// Faça um programa em que três processos executam paralelamente as seguintes ações:
-// Pai - Imprime os números de 1 a 50, com um intervalo de 2 segundos entre cada número.
-// Após imprimir todos os números, imprime a frase “Processo pai vai morrer”.
-// Filho1 - Imprime os números de 100 a 200, com um intervalo de 1 segundo entre cada número.
-// Antes de imprimir os números, imprime a frase “Filho 1 foi criado”.
-// Após imprimir todos os números, imprime a frase “Filho 1 vai morrer”.
-// Filho 2 - Inicia apeas após o pai morrer, imprime os números de 51 a 99
-// • Importante, em cada printf os processos devem imprimir o seu pid e o pid do seu pai.
-
 int main (void){
     pid_t child1 = 0, child2 = 0;
     
