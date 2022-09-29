@@ -2,3 +2,9 @@ trabalho1
 trabalho2
 trabalho3
 trabalho3_mult
+*.o
+trabalho4_solucoes/trabalho4_1thread
+trabalho4_solucoes/trabalho4_2threads
+trabalho4_solucoes/trabalho4_4threads
+trabalho4_solucoes/trabalho4_8threads
+trabalho4_solucoes/trabalho4_16threads
