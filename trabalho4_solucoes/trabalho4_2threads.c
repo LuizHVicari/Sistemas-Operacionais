@@ -12,7 +12,7 @@
 #include <math.h>
 #define N 2
 
-int prime[100000];
+int *soma;
 
 int is_prime(int num){
     int i;
@@ -26,7 +26,7 @@ void *prime_2_50000(){
     int i;
     for(i = 2; i <= 50000; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[0] += i;
     pthread_exit(NULL);
 }
 
@@ -34,12 +34,13 @@ void *prime_50001_100000(){
     int i;
     for(i = 50001; i <= 100000; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[1] += i;
     pthread_exit(NULL);
 }
 
 int main(void *arg){
-    int soma = 0;
+    soma = (int *) calloc(2, sizeof(int));
+    
     pthread_t threads[N];
     int i, j, y, z;
 
@@ -49,9 +50,9 @@ int main(void *arg){
     for(y = 0; y < N; y++)
         pthread_join(threads[y], NULL);
 
-    for (z = 0; z < 100000; z++)
-        if(prime[z])
-            soma+=z;
+    int soma_primos = 0;
+    for(i = 0; i < N; i++)
+        soma_primos += soma[i];
 
-    printf("Soma dos primos: %d", soma);
+    printf("Soma dos primos: %d", soma_primos);
 }

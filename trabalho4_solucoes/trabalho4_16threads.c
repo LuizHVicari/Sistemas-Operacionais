@@ -12,7 +12,7 @@
 #include <math.h>
 #define N 16
 
-int prime[100000];
+int *soma;
 
 // verifica se o número é primo
 int is_prime(int num){
@@ -28,7 +28,7 @@ void *prime_2_6250(){
     int i;
     for(i = 2; i <= 6250; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[0] += i;
     pthread_exit(NULL);
 }
 
@@ -36,7 +36,7 @@ void *prime_6251_12500(){
     int i;
     for(i = 6251; i <= 12500; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[1] += i;
     pthread_exit(NULL);
 }
 
@@ -44,7 +44,7 @@ void *prime_12501_18750(){
     int i;
     for(i = 12501; i <= 18750; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[2] += i;
     pthread_exit(NULL);
 }
 
@@ -52,7 +52,7 @@ void *prime_18751_25000(){
     int i;
     for(i = 18751; i <= 25000; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[3] += i;
     pthread_exit(NULL);
 }
 
@@ -60,7 +60,7 @@ void *prime_25001_31250(){
     int i;
     for(i = 25001; i <= 31250; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[4] += i;
     pthread_exit(NULL);
 }
 
@@ -68,7 +68,7 @@ void *prime_31251_37500(){
     int i;
     for(i = 31251; i <= 37500; i++)
         if(is_prime(i))
-           prime[i] = 1;
+            soma[5] += i;
     pthread_exit(NULL);
 }
 
@@ -76,7 +76,7 @@ void *prime_37501_43750(){
     int i;
     for(i = 37501; i <= 43750; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[6] += i;
     pthread_exit(NULL);
 }
 
@@ -84,7 +84,7 @@ void *prime_43751_50000(){
     int i;
     for(i = 43751; i <= 50000; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[7] += i;
     pthread_exit(NULL);
 }
 
@@ -92,7 +92,7 @@ void *prime_50001_56250(){
     int i;
     for(i = 50001; i <= 56250; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[8] += i;
     pthread_exit(NULL);
 }
 
@@ -100,7 +100,7 @@ void *prime_56251_62500(){
     int i;
     for(i = 56251; i <= 62500; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[9] += i;
     pthread_exit(NULL);
 }
 
@@ -108,7 +108,7 @@ void *prime_62501_68750(){
     int i;
     for(i = 62501; i <= 68750; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[10] += i;
     pthread_exit(NULL);
 }
 
@@ -116,7 +116,7 @@ void *prime_68751_75000(){
     int i;
     for(i = 68751; i <= 75000; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[11] += i;
     pthread_exit(NULL);
 }
 
@@ -124,7 +124,7 @@ void *prime_75001_81250(){
     int i;
     for(i = 75001; i <= 81250; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[12] += i;
     pthread_exit(NULL);
 }
 
@@ -132,7 +132,7 @@ void *prime_81251_87500(){
     int i;
     for(i = 81251; i <= 87500; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[13] += i;
     pthread_exit(NULL);
 }
 
@@ -140,7 +140,7 @@ void *prime_87501_93750(){
     int i;
     for(i = 87501; i <= 93750; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[14] += i;
     pthread_exit(NULL);
 }
 
@@ -148,13 +148,12 @@ void *prime_93751_100000(){
     int i;
     for(i = 93751; i < 100000; i++)
         if(is_prime(i))
-            prime[i] = 1;
+            soma[15] += i;
     pthread_exit(NULL);
 }
 
 int main(void *arg){
-    // inicia as variáveis
-    int soma = 0;
+    soma = (int *) calloc(16, sizeof(int));
     pthread_t threads[N];
     // cada variável armazena uma thread
     int i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z;
@@ -183,9 +182,10 @@ int main(void *arg){
 
 
     // verifica as posições do vetor que são primos e soma elas
-    for (z = 0; z < 100000; z++)
-        if(prime[z])
-            soma+=z;
+    int soma_primos = 0;
+    for(i = 0; i < 16; i++)
+        soma_primos += soma[i];
+        
 
-    printf("Soma dos primos: %d", soma);
+    printf("Soma dos primos: %d", soma_primos);
 }
