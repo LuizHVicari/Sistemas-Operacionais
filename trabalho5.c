@@ -15,10 +15,10 @@ sem_t cooking;
 int hogs_on_table = 21;
 
 void cooker(void*name){
-    // O cozinheiro é acordado pelo selvagem
+        // O cozinheiro é acordado pelo selvagem
     printf("Selvagem %s acordou o cozinheiro\n", (char*)name);
     if(hogs_on_table == 0){
-        // O cozinheiro prepara os porcos
+         // O cozinheiro prepara os porcos
         // Acredito que esse semáforo não seja necessário
         sem_wait(&cooking);
         sleep(TEMPO_COZINHAR);
@@ -27,13 +27,14 @@ void cooker(void*name){
         sem_post(&cooking);
     }
     else
-        // Se alguém chamar o cozinheiro enquanto ainda houver porcos, tem algo errado
+         // Se alguém chamar o cozinheiro enquanto ainda houver porcos, tem algo errado
         printf("Ainda tem porcos na mesa, o selvagem %s foi inconveniente\n", (char*)name);
 }
 
 void *savage(void *name){
     int i;
     // Os selvagens comem 100 vezes cada 1
+
     while(i < 100){
         // O selvagem tenta pegar um porco, se alguém estiver comendo, o selvagem espera
         sem_wait(&take_hog);
@@ -47,12 +48,13 @@ void *savage(void *name){
             sleep(TEMPO_COMER);
         }
         else{
-            // Se o selvagem for se serivir e não houver porcos, ele acorda o cozinheiro
+            // Se o slevagem for se servir e não houver porcos, ele acorda o cozinheiro
            cooker(name);
-           // Após o cozinheiro terminar, ele serve os porcos, a verificação é só para debug se algo deu errado
+           // Após o cozinheiro termianr, ele serve os porocos, a verificação é só para debug se algo deu errado
             if(hogs_on_table > 0){
                 // Diminui o número de porcos na mesa
                 hogs_on_table--;
+                printf("Selvagem %s pegou um porco, porcos na mesa: %d\n", (char*)name, hogs_on_table);
                 // Depois que se servir, libera para outros selvagens comerem
                 sem_post(&take_hog);
                 // O selvagem come
@@ -75,9 +77,9 @@ int main(void){
 
     threads[0] = pthread_create(&selvagens[0], NULL, savage, "Esse nao faz nada");
     threads[1] = pthread_create(&selvagens[1], NULL, savage, "L(1)");
-    threads[2] = pthread_create(&selvagens[2], NULL, savage, "L(2)");
-    threads[3] = pthread_create(&selvagens[3], NULL, savage, "L(3)");
-    threads[4] = pthread_create(&selvagens[4], NULL, savage, "L(4)");
+    threads[2] = pthread_create(&selvagens[2], NULL, savage, "U(2)");
+    threads[3] = pthread_create(&selvagens[3], NULL, savage, "I(3)");
+    threads[4] = pthread_create(&selvagens[4], NULL, savage, "Z(4)");
 
     for(int i = 0; i < QTDE_SELVAGENS; i++)
         pthread_join(selvagens[i], NULL);
