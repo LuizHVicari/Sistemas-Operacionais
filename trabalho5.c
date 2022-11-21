@@ -32,7 +32,7 @@ void cooker(void*name){
 }
 
 void *savage(void *name){
-    int i;
+    int i = 0;
     // Os selvagens comem 100 vezes cada 1
 
     while(i < 100){
@@ -70,16 +70,15 @@ void *savage(void *name){
 }
 
 int main(void){
-    pthread_t selvagens[QTDE_SELVAGENS + 1];
-    int threads[QTDE_SELVAGENS + 1];
+    pthread_t selvagens[QTDE_SELVAGENS];
+    int threads[QTDE_SELVAGENS];
     sem_init(&take_hog, 0, 1);
     sem_init(&cooking, 0, 1);
 
-    threads[0] = pthread_create(&selvagens[0], NULL, savage, "Esse nao faz nada");
-    threads[1] = pthread_create(&selvagens[1], NULL, savage, "L(1)");
-    threads[2] = pthread_create(&selvagens[2], NULL, savage, "U(2)");
-    threads[3] = pthread_create(&selvagens[3], NULL, savage, "I(3)");
-    threads[4] = pthread_create(&selvagens[4], NULL, savage, "Z(4)");
+    threads[0] = pthread_create(&selvagens[0], NULL, savage, "L(1)");
+    threads[1] = pthread_create(&selvagens[1], NULL, savage, "U(2)");
+    threads[2] = pthread_create(&selvagens[2], NULL, savage, "I(3)");
+    threads[3] = pthread_create(&selvagens[3], NULL, savage, "Z(4)");
 
     for(int i = 0; i < QTDE_SELVAGENS; i++)
         pthread_join(selvagens[i], NULL);
