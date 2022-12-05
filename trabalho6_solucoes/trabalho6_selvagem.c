@@ -8,9 +8,10 @@
 #include <sys/mman.h>
 #include <signal.h>
 
-#define MAX_NUM_JAVALIS 21
 #define NUM_SAVAGE 4
 #define TIME_EAT 1
+
+char name[4] = "LUIZ";
 
 typedef struct shmbuf{
     int hogs_on_table;
@@ -23,7 +24,6 @@ typedef struct shmbuf{
 }shm_t;
 
 shm_t *shared_mem;
-char name[4] = "LUIZ";
 
 
 void ini_shm(){
@@ -47,7 +47,7 @@ void take_hog(long gaules){
     }
 }
 
-void *Savage(void *num_savage){
+void *savage(void *num_savage){
     long savage = (int)num_savage;
     while(1){
         // espera para poder ir na mesa pegar javalis
@@ -67,7 +67,7 @@ int main(){
     // cria as trheads
     pthread_t savages[NUM_SAVAGE];
     for(int i = 0; i < NUM_SAVAGE; i++)
-        pthread_create(&savages[i], NULL, Savage, (void*)i);
+        pthread_create(&savages[i], NULL, savage, (void*)i);
 
     // fehca as threads
     for(int i = 0; i < NUM_SAVAGE; i++)
